@@ -1,39 +1,61 @@
 #include "monty.h"
 
-/**
- * main - Main function for Monty interpreter.
- * @argc: Argument count.
- * @argv: Argument vector.
- * Return: EXIT_SUCCESS on success, EXIT_FAILURE on failure.
- */
+char *read_line(FILE *file)
+{
+    char *line = NULL;
+    int c;
+    size_t size = 0;
+    size_t len = 0;
+
+    while ((c = fgetc(file)) != EOF && c != '\n')
+    {
+        if (len + 1 >= size)
+        {
+            size = size ? size * 2 : 1024;
+            line = realloc(line, size);
+        }
+        line[len++] = c;
+    }
+
+    if (len == 0)
+    {
+        free(line);
+        return (NULL);
+    }
+
+    line[len] = '\0';
+    return (line);
+}
+
 int main(int argc, char *argv[])
 {
+    FILE *file;
+    char *line;
+    unsigned int line_number = 0;
+    stack_t *stack = NULL;
+    char *opcode;
+    char *argument;
+    char *c;
+
     if (argc != 2)
     {
         fprintf(stderr, "USAGE: monty file\n");
         exit(EXIT_FAILURE);
     }
 
-    FILE *file = fopen(argv[1], "r");
+    file = fopen(argv[1], "r");
     if (!file)
     {
         fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
         exit(EXIT_FAILURE);
     }
 
-    char *line = NULL;
-    size_t len = 0;
-    unsigned int line_number = 0;
-    stack_t *stack = NULL;
-
-    while (getline(&line, &len, file) != -1)
+    while ((line = read_line(file)) != NULL)
     {
         line_number++;
-
-        char *opcode = strtok(line, " \t\r\n");
-        char *argument = strtok(NULL, " \t\r\n");
-
-        for (char *c = opcode; *c; c++)
+        opcode = strtok(line, " \t\r\n");
+        argument = strtok(NULL, " \t\r\n");
+        for (c = opcode; *c; c++)
         {
             if (!isalnum(*c))
             {
@@ -41,10 +63,8 @@ int main(int argc, char *argv[])
                 break;
             }
         }
-
         if (opcode == NULL || opcode[0] == '#')
             continue;
-
         if (strcmp(opcode, "push") == 0)
         {
             if (argument == NULL || !isdigit(argument[0]))
