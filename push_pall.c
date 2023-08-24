@@ -1,11 +1,35 @@
 #include "monty.h"
 
+int is_number(const char *str)
+{
+    if (str == NULL)
+        return 0;
+
+    if (*str == '-' || *str == '+')
+        str++;
+
+    while (*str)
+    {
+        if (!isdigit(*str))
+            return 0;
+        str++;
+    }
+
+    return 1;
+}
+
 void push(stack_t **stack, unsigned int line_number, const char *n)
 {
     stack_t *new_node;
-    int num = atoi(n);
+    int num;
 
-    (void)line_number;
+    if (n == NULL || !is_number(n))
+    {
+        fprintf(stderr, "L%d: usage: push integer\n", line_number);
+        exit(EXIT_FAILURE);
+    }
+
+    num = atoi(n);
     new_node = malloc(sizeof(stack_t));
     if (!new_node)
     {
