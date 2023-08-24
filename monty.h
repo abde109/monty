@@ -18,6 +18,7 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+extern int queue_mode;
 
 void push(stack_t **stack, unsigned int line_number, const char *n);
 void pall(stack_t **stack, unsigned int line_number);

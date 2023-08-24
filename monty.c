@@ -1,7 +1,7 @@
 #include "monty.h"
+int queue_mode = 0;
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv){
     FILE *file;
     char *line = NULL;
     unsigned int line_number = 0;
