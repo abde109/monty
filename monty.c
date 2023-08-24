@@ -6,6 +6,7 @@ int main(int argc, char **argv)
     char *line = NULL;
     unsigned int line_number = 0;
     stack_t *stack = NULL;
+    
 
     if (argc != 2)
     {
@@ -74,9 +75,9 @@ int main(int argc, char **argv)
         else if (strcmp(opcode, "rotr") == 0)
             rotr(&stack, line_number);
         else if(strcmp(opcode, "stack") == 0)
-            stack(&stack, line_number);
+            handle_stack(&stack, line_number);
         else if (strcmp(opcode, "queue") == 0)
-            queue(&stack, line_number);
+            handle_queue(&stack, line_number);
 
         else
         {
