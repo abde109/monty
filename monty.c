@@ -96,6 +96,10 @@ int main(int argc, char *argv[])
         {
             pop(&stack, line_number);
         }
+        else if (strcmp(opcode, "div") == 0)
+        {
+            div_opcode(&stack, line_number);
+        }
         else
         {
             fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
