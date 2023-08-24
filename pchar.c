@@ -1,8 +1,8 @@
 #include "monty.h"
 
-void pchar_opcode(stack_t **stack, unsigned int line_number)
+void pchar(stack_t **stack, unsigned int line_number)
 {
-    if (!stack || !*stack)
+    if (*stack == NULL)
     {
         fprintf(stderr, "L%u: can't pchar, stack empty\n", line_number);
         exit(EXIT_FAILURE);
@@ -12,6 +12,5 @@ void pchar_opcode(stack_t **stack, unsigned int line_number)
         fprintf(stderr, "L%u: can't pchar, value out of range\n", line_number);
         exit(EXIT_FAILURE);
     }
-    putchar((*stack)->n);
-    putchar('\n');
+    printf("%c\n", (*stack)->n);
 }

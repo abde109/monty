@@ -1,8 +1,8 @@
 #include "monty.h"
 
-void mod_opcode(stack_t **stack, unsigned int line_number)
+void mod(stack_t **stack, unsigned int line_number)
 {
-    if (!stack || !*stack || !(*stack)->next)
+    if (*stack == NULL || (*stack)->next == NULL)
     {
         fprintf(stderr, "L%u: can't mod, stack too short\n", line_number);
         exit(EXIT_FAILURE);

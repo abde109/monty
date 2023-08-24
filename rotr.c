@@ -1,19 +1,18 @@
 #include "monty.h"
 
-void rotr_opcode(stack_t **stack, unsigned int line_number)
+void rotr(stack_t **stack, unsigned int line_number)
 {
-    stack_t *temp;
+    stack_t *current = *stack;
 
     (void)line_number;
 
-    if (!stack || !*stack || !(*stack)->next)
-        return;
-
-    temp = *stack;
-    while (temp->next->next)
-        temp = temp->next;
-
-    temp->next->next = *stack;
-    *stack = temp->next;
-    temp->next = NULL;
+    if (current != NULL && current->next != NULL)
+    {
+        while (current->next != NULL)
+            current = current->next;
+        current->next = *stack;
+        current->prev->next = NULL;
+        (*stack)->prev = current;
+        *stack = current;
+    }
 }
