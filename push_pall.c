@@ -1,11 +1,17 @@
 #include "monty.h"
 
+#include "monty.h"
+
 void push(stack_t **stack, unsigned int line_number, const char *n)
 {
     stack_t *new_node;
-    int num = atoi(n);
 
-    (void)line_number;
+    if (n == NULL || !isdigit(*n))
+    {
+        fprintf(stderr, "L%u: usage: push integer\n", line_number);
+        exit(EXIT_FAILURE);
+    }
+
     new_node = malloc(sizeof(stack_t));
     if (!new_node)
     {
@@ -13,21 +19,25 @@ void push(stack_t **stack, unsigned int line_number, const char *n)
         exit(EXIT_FAILURE);
     }
 
-    new_node->n = num;
+    new_node->n = atoi(n);
+    new_node->prev = NULL;
     new_node->next = *stack;
+
+    if (*stack)
+        (*stack)->prev = new_node;
+
     *stack = new_node;
 }
 
 void pall(stack_t **stack, unsigned int line_number)
 {
-    stack_t *current;
+    stack_t *temp = *stack;
 
     (void)line_number;
-    current = *stack;
 
-    while (current)
+    while (temp)
     {
-        printf("%d\n", current->n);
-        current = current->next;
+        printf("%d\n", temp->n);
+        temp = temp->next;
     }
 }

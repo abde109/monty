@@ -6,21 +6,18 @@
 #include <string.h>
 #include <ctype.h>
 
-/**
- * struct stack_s - Doubly linked list representation of a stack (or queue).
- * @n: Integer value.
- * @next: Pointer to the next element of the stack (or queue).
- */
 typedef struct stack_s
 {
 	int n;
+	struct stack_s *prev;
 	struct stack_s *next;
 } stack_t;
 
-/**
- * op_func_t - Typedef for opcode functions.
- */
-typedef void (*op_func_t)(stack_t **stack, unsigned int line_number);
+typedef struct instruction_s
+{
+	char *opcode;
+	void (*f)(stack_t **stack, unsigned int line_number);
+} instruction_t;
 
 /* Opcode function prototypes */
 void push(stack_t **stack, unsigned int line_number, const char *n);
@@ -30,6 +27,7 @@ void pop(stack_t **stack, unsigned int line_number);
 void swap(stack_t **stack, unsigned int line_number);
 void add(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
+void sub_opcode(stack_t **stack, unsigned int line_number);
 void div_opcode(stack_t **stack, unsigned int line_number);
 void mul_opcode(stack_t **stack, unsigned int line_number);
 void mod_opcode(stack_t **stack, unsigned int line_number);
