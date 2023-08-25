@@ -1,7 +1,8 @@
 #include "monty.h"
 int queue_mode = 0;
 
-int main(int argc, char **argv){
+int main(int argc, char **argv)
+{
     FILE *file;
     char *line = NULL;
     unsigned int line_number = 0;
@@ -54,7 +55,7 @@ int main(int argc, char **argv){
             pop(&stack, line_number);
         else if (strcmp(opcode, "swap") == 0)
             swap(&stack, line_number);
-        if (strcmp(opcode, "add") == 0)
+        else if (strcmp(opcode, "add") == 0)
             add(&stack, line_number);
         else if (strcmp(opcode, "nop") == 0)
             nop(&stack, line_number);
