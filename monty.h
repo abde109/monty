@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 typedef struct stack_s
 {
@@ -21,6 +22,7 @@ typedef struct instruction_s
 extern int queue_mode;
 
 void push(stack_t **stack, unsigned int line_number, const char *n);
+int is_number(const char *str);
 void pall(stack_t **stack, unsigned int line_number);
 void free_stack(stack_t *stack);
 void pint(stack_t **stack, unsigned int line_number);

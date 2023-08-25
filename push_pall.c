@@ -4,7 +4,7 @@ void push(stack_t **stack, unsigned int line_number, const char *n)
 {
     stack_t *new_node;
 
-    if (n == NULL || atoi(n) == 0)
+    if (n == NULL || !is_number(n))
     {
         fprintf(stderr, "L%u: usage: push integer\n", line_number);
         exit(EXIT_FAILURE);
@@ -25,6 +25,24 @@ void push(stack_t **stack, unsigned int line_number, const char *n)
         (*stack)->prev = new_node;
 
     *stack = new_node;
+}
+
+int is_number(const char *str)
+{
+    if (str == NULL)
+        return 0;
+
+    if (*str == '-' || *str == '+')
+        str++;
+
+    while (*str != '\0')
+    {
+        if (!isdigit(*str))
+            return 0;
+        str++;
+    }
+
+    return 1;
 }
 
 void pall(stack_t **stack, unsigned int line_number)
